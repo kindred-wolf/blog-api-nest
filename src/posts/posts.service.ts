@@ -1,21 +1,34 @@
 import { Injectable } from '@nestjs/common'
-import { CreatePostDto } from '../dto/createPost.dto'
+import { CreatePostDto } from './DTO/createPost.dto'
+import { Post } from './Entities/post.entity'
+import { PostsRepository } from './posts.repository'
 
 @Injectable()
 export class PostsService {
-  async getAllPosts() {
-    console.log('Get all posts')
+  constructor(private readonly postsRepository: PostsRepository) {}
+
+  async getAllPosts(): Promise<Post[] | undefined> {
+    try {
+      return await this.postsRepository.getAllPosts()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
-  async getPostByID(id: number){
-    console.log(`Get post ${id}`)
+  async getPostByID(id: number) {
+    try {
+      return await this.postsRepository.getPostByID(id)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
-  async createPost(post: CreatePostDto){
+  async createPost(post: CreatePostDto): Promise<Post> {
     console.log(`Creating post: ${post.title}: ${post.content}`)
+    return await this.postsRepository.createPost(post)
   }
 
-  async deletePost(id: number){
+  async deletePost(id: number) {
     console.log(`Delete post ${id}`)
   }
 }
