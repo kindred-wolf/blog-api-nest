@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { PostsModule } from './posts/posts.module'
+import { PostsModule } from './posts/PostsModule'
 import { ConfigModule } from '@nestjs/config'
 import Joi from '@hapi/joi'
-import { DatabaseModule } from './database/database.module'
+import { DatabaseModule } from './database/DatabaseModule'
 
 @Module({
   imports: [
