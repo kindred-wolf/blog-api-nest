@@ -4,9 +4,10 @@ import { PostsService } from './PostsService';
 import { PostEntity } from "./Entities/PostEntity"
 import { TypeOrmModule } from "@nestjs/typeorm"
 import { PostsRepository } from "./PostsRepository"
+import { PostDto } from "./Entities/PostDto"
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PostEntity])],
+    imports: [TypeOrmModule.forFeature([PostEntity]), PostDto],
     controllers: [PostsController],
     providers: [PostsService, PostsRepository]
 })

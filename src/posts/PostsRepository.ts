@@ -2,6 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { DeleteResult, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { PostEntity } from './Entities/PostEntity'
+import { PostDto } from './Entities/PostDto'
 
 @Injectable()
 export class PostsRepository {
@@ -21,7 +22,7 @@ export class PostsRepository {
     return post || null
   }
 
-  async createPost(post: PostEntity): Promise<PostEntity> {
+  async createPost(post: PostDto): Promise<PostEntity> {
     const newPost = await this.postsRepository.create(post)
     await this.postsRepository.save(newPost)
     return newPost
