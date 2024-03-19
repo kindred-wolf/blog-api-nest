@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { PostEntity } from "src/posts/Entities/PostEntity"
+import { Column, Entity, PrimaryGeneratedColumn, Table } from "typeorm"
 
 @Entity()
 export class UserEntity{

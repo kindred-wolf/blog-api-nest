@@ -2,38 +2,36 @@ import { Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 import { UserEntity } from './Entity/UserEntity'
 import { UserDataDto } from './Dto/UserDataDto'
+import { IAuthenticationRepository } from './IAuthenticationRepository'
+import { InjectRepository } from '@nestjs/typeorm'
 
 @Injectable()
-export class AuthenticationRepository {
+export class AuthenticationRepository implements IAuthenticationRepository {
   constructor(
+    @InjectRepository(UserEntity)
     private readonly authenticationRepository: Repository<UserEntity>,
   ) {}
 
-  async registerUser(userData: UserDataDto) : Promise<UserEntity> {
+  async save(userData: UserEntity): Promise<UserEntity> {
+    return await this.authenticationRepository.save(userData)
+  }
+
+  create(userData: UserDataDto): UserEntity {
     const newUser = this.authenticationRepository.create(userData)
-    await this.authenticationRepository.save(newUser)
     return newUser
   }
 
-  async authenticateUser(userData: UserDataDto) : Promise<UserEntity>{
-    const user = await this.authenticationRepository.findOne({
-        where: { username: userData.username }
+  async findByUsername(username: string): Promise<UserEntity> {
+    return await this.authenticationRepository.findOne({
+      where: { username: username },
     })
-
-    if(!user){
-        return null
-    }
-
-    const valid = this.validateUser(userData, user)
-
-    if(valid){
-        return null
-    }
-
-    return user
   }
 
-  validateUser(userData: UserDataDto, user: UserEntity) {
-    return userData.password === user.password
+  async find() {
+    return await this.authenticationRepository.find()
+  }
+
+  async deleteById(id: number){
+    await this.authenticationRepository.delete(id)
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { PostEntity } from './Entities/PostEntity'
 import { PostsRepository } from './PostsRepository'
 import { DeleteResult } from 'typeorm'
-import { PostDto } from './Entities/PostDto'
+import { PostDto } from './DTO/PostDto'
 
 @Injectable()
 export class PostsService {
